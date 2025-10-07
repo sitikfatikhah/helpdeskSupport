@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'status',
+        'password', // <--- INI PERBAIKAN UTAMA: Tambahkan 'password' di sini
     ];
 
     /**
@@ -46,9 +47,12 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            // Ini sudah benar: memastikan password otomatis di-hash
             'password' => 'hashed',
         ];
     }
+
+    // --- Metode-metode lain di bawah ini sudah benar ---
 
     /**
      * Get the user's initials
@@ -62,12 +66,14 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function company()
+    public function company(): BelongsTo
     {
-    return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class);
     }
-    public function department()
+
+    public function department(): BelongsTo
     {
-    return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class);
     }
+
 }

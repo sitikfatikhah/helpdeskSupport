@@ -23,7 +23,7 @@ class TicketFactory extends Factory
 {
     return [
         'user_id' => User::factory(),
-        'department_id' => Department::factory(),
+        'department_name' => Department::factory(),
         'ticket_number' => 'TCK-' . now()->format('y') . $this->faker->unique()->numerify('#####'),
         'open_time' => $this->faker->dateTime()->format('Y-m-d H:i:s'),
         'close_time' => $this->faker->dateTime()->format('Y-m-d H:i:s'),
@@ -35,7 +35,7 @@ class TicketFactory extends Factory
         'software_or_application' => $this->faker->randomElement(['Microsoft Word', 'Excel', 'Chrome', 'Zoom']),
         'error_message' => $this->faker->sentence,
         'step_taken' => $this->faker->paragraph,
-        'ticket_status' => $this->faker->randomElement(['Open', 'In Progress', 'Resolved', 'Closed']),
+        'ticket_status' => $this->faker->randomElement(['other', 'on_progress', 'solved', 'monitored', 'callback']),
     ];
 }
 

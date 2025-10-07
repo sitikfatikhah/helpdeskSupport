@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('department_name');
             $table->foreignId('user_id')->nullable();
-            $table->timestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
         });
     }
 

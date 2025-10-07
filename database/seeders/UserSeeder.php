@@ -15,19 +15,29 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Buat role jika belum ada
-        Role::firstOrCreate(['name' => 'super_admin']);
+        $role = Role::firstOrCreate(['name' => 'Super Admin']);
 
         // Buat user
-        $user = User::create([
-            'nik' => '12345678',
-            'name' => 'Admin User',
-            'company_id' => 1,
+        $admin = User::create([
+            'nik' => '1111',
+            'name' => 'Super Admin',
+            'company_name' => 'Tesing',
             'email' => 'admin@example.com',
             'status' => 'active',
             'password' => Hash::make('admin123'),
         ]);
 
-        // Assign role
+        $admin->assignRole($role);
+
+        $user = User::create([
+            'nik' => '1112',
+            'name' => 'User',
+            'company_name' => 'testing',
+            'email' => 'user@example.com',
+            'status' => 'active',
+            'password' => Hash::make('123456789'),
+        ]);
+
         $user->assignRole('super_admin');
     }
 }

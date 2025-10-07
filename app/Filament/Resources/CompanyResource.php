@@ -4,17 +4,24 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Models\Company;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Panel;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class CompanyResource extends Resource
+class CompanyResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Company::class;
 
+    protected static ?int $navigationSort = 3;
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+
+    protected static ?string $navigationGroup = 'Master User';
 
     public static function getPermissionPrefixes(): array
     {
@@ -67,5 +74,11 @@ class CompanyResource extends Resource
         return [
             'index' => Pages\ManageCompanies::route('/'),
         ];
+    }
+    public function panel(panel $panel): Panel
+    {
+    return $panel
+        // ...
+        ->maxContentWidth(MaxWidth::Full);
     }
 }

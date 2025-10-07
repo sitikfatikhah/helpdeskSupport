@@ -17,12 +17,31 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Actions\ImportAction;
 use App\Models\Company;
 use App\Models\Department;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Illuminate\Database\Eloquent\Model;
 
-class UserResource extends Resource
+class UserResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = User::class;
 
+    protected static ?int $navigationSort = 5;
+
     protected static ?string $navigationIcon = 'heroicon-s-users';
+
+    protected static ?string $navigationGroup = 'Master User';
+
+        public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'publish'
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -34,8 +53,13 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('nik')
                     ->label('NIK')
                     ->required()
-                    ->maxLength(255)
+                    ->maxLength(6)
                     ->unique(table: User::class, column: 'nik', ignoreRecord: true),
+                Forms\Components\Select::make('role')
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->label('Roles'),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
@@ -43,16 +67,26 @@ class UserResource extends Resource
                     ->nullable(),
                 Forms\Components\Select::make('company_id')
                     ->relationship('company', 'company_name')
-                    ->getOptionLabelFromRecordUsing(fn($record) => "{$record->company}")
                     ->label('Company')
                     ->preload()
                     ->searchable()
-                    ->required(),
-                Forms\Components\Select::make('department_id')
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Silakan pilih perusahaan terlebih dahulu.',
+                        'exists'   => 'Perusahaan yang dipilih tidak ditemukan.',
+                    ]),
+
+                Forms\Components\Select::make('department_name')
                     ->relationship('department', 'department_name')
+                    ->label('Department')
                     ->preload()
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Silakan pilih departemen terlebih dahulu.',
+                        'exists'   => 'Departemen yang dipilih tidak ditemukan.',
+                    ]),
+
                 Forms\Components\Select::make('status')
                     ->label('Status')
                     ->options([
@@ -68,9 +102,12 @@ class UserResource extends Resource
                 // Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
                     ->maxLength(255)
-                    ->revealable(),
+                    ->revealable()
+                    ->required()
+                    // ->dehydrateStateUsing(fn ($state) => ! empty($state) ? bcrypt($state) : null)
+                    // ->dehydrated(fn ($state) => filled($state))
+                    ->label('Password'),
             ]);
     }
 
@@ -79,13 +116,15 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->searchable(),
-                Tables\Columns\TextColumn::make('nik')->label('NIK')->searchable(),
-                Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('nik')->label('NIK')->searchable()->formatStateUsing(fn ($state) => ucfirst(strtolower($state))),
+                Tables\Columns\TextColumn::make('name')->searchable()->formatStateUsing(fn ($state) => ucfirst(strtolower($state))),
+                Tables\Columns\TextColumn::make('roles.name')->label('Roles')->badge()->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\TextColumn::make('company.company')->label('Company')->searchable(),
-                Tables\Columns\TextColumn::make('department.name')->label('Department')->searchable(),
+                Tables\Columns\TextColumn::make('company.company_name')->label('Company')->searchable(),
+                Tables\Columns\TextColumn::make('department.department_name')->label('Department')->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
+                    ->formatStateUsing(fn ($state) => ucfirst(strtolower($state)))
                     ->badge()
                     ->color(fn (string $state): string => match (strtolower($state)) {
                         'active' => 'primary',
@@ -119,7 +158,13 @@ class UserResource extends Resource
                     ->modalHeading('Update User Status')
                     ->icon('heroicon-m-arrow-path'),
 
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                 ->using(function (Model $record, array $data): Model {
+                        $record->update($data);
+
+                        return $record;
+                        // dd($data);
+                    }),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -133,4 +178,5 @@ class UserResource extends Resource
             'index' => Pages\ManageUsers::route('/'),
         ];
     }
+
 }

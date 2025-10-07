@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->string('nik');
         $table->foreignId('department_id')->constrained()->onDelete('cascade');
         $table->string('ticket_number')->unique();
         $table->dateTime('open_time');
@@ -27,16 +28,12 @@ return new class extends Migration
         $table->string('software_or_application')->nullable();
         $table->longText('error_message')->nullable();
         $table->longText('step_taken')->nullable();
-        $table->enum('ticket_status', ['on_progress','solved', 'callback', 'monitored', 'other'])->default('on_progress');
-        $table->timestamps();
+        // $table->json('attachment')->nullable();
+        $table->enum('ticket_status', ['on_progress','resolved', 'callback', 'monitored', 'other'])->default('on_progress');
+        // $table->timestamps();
+        $table->dateTime('created_at')->nullable();
+        $table->dateTime('updated_at')->nullable();
         });
-
-        if (!Schema::hasTable('tickets')) {
-        Schema::create('tickets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
     }
 
     /**
