@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('app') //minta diganti jadi app
             ->brandName('IT Helpdesk')
             // ->brandLogo(asset('images/logo.png'))
             // ->favicon(asset('images/favicon.ico'))
