@@ -40,29 +40,36 @@ class Ticket extends Model
         $year = now()->format('y');
         $prefix = 'TKC-' . $year;
 
-        // Gunakan SELECT ... FOR UPDATE agar aman dari race condition
-        $last = self::whereYear('created_at', now()->year)
+        // Kunci baris terakhir agar tidak terjadi race condition
+        $last = self::where('ticket_number', 'like', $prefix . '%')
             ->lockForUpdate()
             ->orderByDesc('id')
             ->first();
 
-        $next = $last ? intval(substr($last->ticket_number, -3)) + 1 : 1;
-        $ticketNumber = sprintf('%s%03d', $prefix, $next);
+        // Ambil angka terakhir dari ticket_number
+        if ($last) {
+            // Ambil semua digit setelah prefix (misal TKC-25007 -> 7)
+            $lastNumber = (int) str_replace($prefix, '', $last->ticket_number);
+        } else {
+            $lastNumber = 0;
+        }
 
-        // // Simpan dummy ticket (opsional)
-        // self::create([
-        //     'ticket_number' => $ticketNumber,
-        //     'ticket_status' => 'on_progress',
-        //     'user_id' => Auth::id(),
-        //     'open_time' => now(),
-        //     'description' => 'text input',
-        //     'category' => 'hardware',
-        //     'priority_level' => 'low',
-        // ]);
+        $next = $lastNumber + 1;
+
+        // Format nomor dengan 5 digit agar panjangnya konsisten
+        $ticketNumber = sprintf('%s%05d', $prefix, $next);
+
+        // Pastikan belum ada nomor duplikat (backup check)
+        while (self::where('ticket_number', $ticketNumber)->exists()) {
+            $next++;
+            $ticketNumber = sprintf('%s%05d', $prefix, $next);
+        }
 
         return $ticketNumber;
     });
 }
+
+
 
 
     protected $casts = [
