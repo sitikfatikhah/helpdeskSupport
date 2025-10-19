@@ -57,7 +57,7 @@ class Ticket extends Model
         $next = $lastNumber + 1;
 
         // Format nomor dengan 5 digit agar panjangnya konsisten
-        $ticketNumber = sprintf('%s%05d', $prefix, $next);
+        $ticketNumber = sprintf('%s%03d', $prefix, $next);
 
         // Pastikan belum ada nomor duplikat (backup check)
         while (self::where('ticket_number', $ticketNumber)->exists()) {
