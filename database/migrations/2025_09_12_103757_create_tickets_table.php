@@ -20,9 +20,9 @@ return new class extends Migration
         $table->string('ticket_number')->unique();
         $table->dateTime('open_time');
         $table->dateTime('close_time');
-        $table->enum('priority_level', ['low', 'medium', 'high'])->default('low');
-        $table->enum('category', ['software', 'hardware', 'network', 'other'])->default('hardware');
-        $table->longText('description');
+        $table->enum('priority_level', ['low', 'medium', 'high'])->default('low')->nullable();
+        $table->enum('category', ['software', 'hardware', 'network', 'other'])->default('hardware')->nullable();
+        $table->longText('description')->nullable();
         $table->enum('type_device', ['desktop', 'laptop', 'printer', 'other'])->nullable();
         $table->enum('operation_system', ['windows', 'macos', 'linux', 'other'])->nullable();
         $table->string('software_or_application')->nullable();

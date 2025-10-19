@@ -87,13 +87,8 @@ class TicketResource extends Resource implements HasShieldPermissions
 
         Forms\Components\TextInput::make('ticket_number')
             ->label('Ticket Number')
-            ->default(function () {
-                $yearSuffix = now()->format('y');
-                $countThisYear = \App\Models\Ticket::whereYear('created_at', now()->year)->count();
-                return 'TKC-' . $yearSuffix . str_pad($countThisYear + 1, 3, '0', STR_PAD_LEFT);
-            })
-            ->disabled(fn () => !auth()->user()->hasRole('super_admin'))
-            ->dehydrated(false)
+            ->default(fn () => \App\Models\Ticket::generateTicketNumber())
+            ->disabled()
             ->required()
             ->helperText('Auto-generated ticket ID.'),
 
@@ -117,9 +112,9 @@ class TicketResource extends Resource implements HasShieldPermissions
                 'network' => 'Network',
                 'other' => 'Other',
             ])
-            ->required()
             ->inline()
             ->grouped()
+            ->nullable()
             ->helperText('Select issue type.'),
 
         Forms\Components\Select::make('type_device')
@@ -176,6 +171,7 @@ class TicketResource extends Resource implements HasShieldPermissions
         Forms\Components\Textarea::make('description')
             ->autosize()
             ->required()
+            ->nullable()
             ->helperText('Describe the issue.'),
 
         Forms\Components\Textarea::make('step_taken')
@@ -264,6 +260,7 @@ class TicketResource extends Resource implements HasShieldPermissions
                         'resolved' => 'success',
                         'monitored' => 'warning',
                         'callback' => 'danger',
+                        default => 'info',
                     }),
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()

@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Ticket extends Model
 {
@@ -30,6 +33,38 @@ class Ticket extends Model
     // 'attachment',
     'ticket_status',
     ];
+
+    public static function generateTicketNumber()
+{
+    return DB::transaction(function () {
+        $year = now()->format('y');
+        $prefix = 'TKC-' . $year;
+
+        // Gunakan SELECT ... FOR UPDATE agar aman dari race condition
+        $last = self::whereYear('created_at', now()->year)
+            ->lockForUpdate()
+            ->orderByDesc('id')
+            ->first();
+
+        $next = $last ? intval(substr($last->ticket_number, -3)) + 1 : 1;
+        $ticketNumber = sprintf('%s%03d', $prefix, $next);
+
+        // // Simpan dummy ticket (opsional)
+        // self::create([
+        //     'ticket_number' => $ticketNumber,
+        //     'ticket_status' => 'on_progress',
+        //     'user_id' => Auth::id(),
+        //     'open_time' => now(),
+        //     'description' => 'text input',
+        //     'category' => 'hardware',
+        //     'priority_level' => 'low',
+        // ]);
+
+        return $ticketNumber;
+    });
+}
+
+
     protected $casts = [
         // 'attachment' => 'array',
         'open_time' => 'datetime',
@@ -46,16 +81,12 @@ class Ticket extends Model
     return $this->belongsTo(User::class);
     }
     protected static function booted()
-    {
-        static::creating(function ($ticket) {
-            if (empty($ticket->ticket_number)) {
-                $yearSuffix = now()->format('y');
-                $countThisYear = self::whereYear('created_at', now()->year)->count();
-                $ticket->ticket_number = 'TKC-' . $yearSuffix . str_pad($countThisYear + 1, 3, '0', STR_PAD_LEFT);
-            }
-        });
-    }
-
-
-
+{
+    static::creating(function ($ticket) {
+         if (empty($ticket->ticket_number)) {
+            $ticket->ticket_number = self::generateTicketNumber();
+        }
+    });
 }
+
+   }
