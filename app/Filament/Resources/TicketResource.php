@@ -115,6 +115,7 @@ class TicketResource extends Resource implements HasShieldPermissions
             ->inline()
             ->grouped()
             ->nullable()
+            ->required()
             ->helperText('Select issue type.'),
 
         Forms\Components\Select::make('type_device')
