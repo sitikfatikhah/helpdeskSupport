@@ -62,7 +62,7 @@ class Ticket extends Model
         // Pastikan belum ada nomor duplikat (backup check)
         while (self::where('ticket_number', $ticketNumber)->exists()) {
             $next++;
-            $ticketNumber = sprintf('%s%05d', $prefix, $next);
+            $ticketNumber = sprintf('%s%03d', $prefix, $next);
         }
 
         return $ticketNumber;
