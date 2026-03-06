@@ -24,7 +24,8 @@ return new class extends Migration
             $table->json('os_name')->nullable();
             $table->text('info')->nullable();
             $table->string('brand')->nullable();
-            $table->timestamps();
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('updated_at')->nullable();
         });
     }
 
