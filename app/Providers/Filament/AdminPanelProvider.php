@@ -78,7 +78,7 @@ class AdminPanelProvider extends PanelProvider
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
-                DisableBladeIconComponents::class,
+                // DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([

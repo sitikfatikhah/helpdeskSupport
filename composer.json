@@ -8,6 +8,10 @@
     "require": {
         "php": "^8.2",
         "bezhansalleh/filament-shield": "^3.9",
+        "codeat3/blade-eos-icons": "^1.15",
+        "codeat3/blade-ikonate": "^1.6",
+        "codeat3/blade-phosphor-icons": "^2.3",
+        "davidhsianturi/blade-bootstrap-icons": "^2.1",
         "filament/actions": "^3.3",
         "filament/filament": "3.3",
         "filament/notifications": "3.3",

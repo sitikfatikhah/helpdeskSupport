@@ -31,6 +31,34 @@
       0 => 'BladeUI\\Icons\\BladeIconsServiceProvider',
     ),
   ),
+  'codeat3/blade-eos-icons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Codeat3\\BladeEosIcons\\BladeEosIconsServiceProvider',
+    ),
+  ),
+  'codeat3/blade-ikonate' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Codeat3\\BladeIkonate\\BladeIkonateServiceProvider',
+    ),
+  ),
+  'codeat3/blade-phosphor-icons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Codeat3\\BladePhosphorIcons\\BladePhosphorIconsServiceProvider',
+    ),
+  ),
+  'davidhsianturi/blade-bootstrap-icons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Davidhsianturi\\BladeBootstrapIcons\\BladeBootstrapIconsServiceProvider',
+    ),
+  ),
   'filament/actions' => 
   array (
     'providers' => 

@@ -4,6 +4,10 @@
     'app.filament.resources.activity-log-resource.pages.create-activity-log' => 'App\\Filament\\Resources\\ActivityLogResource\\Pages\\CreateActivityLog',
     'app.filament.resources.activity-log-resource.pages.list-activity-logs' => 'App\\Filament\\Resources\\ActivityLogResource\\Pages\\ListActivityLogs',
     'app.filament.resources.activity-log-resource.pages.view-activity-log' => 'App\\Filament\\Resources\\ActivityLogResource\\Pages\\ViewActivityLog',
+    'app.filament.resources.asset-resource.pages.create-asset' => 'App\\Filament\\Resources\\AssetResource\\Pages\\CreateAsset',
+    'app.filament.resources.asset-resource.pages.edit-asset' => 'App\\Filament\\Resources\\AssetResource\\Pages\\EditAsset',
+    'app.filament.resources.asset-resource.pages.list-assets' => 'App\\Filament\\Resources\\AssetResource\\Pages\\ListAssets',
+    'app.filament.resources.asset-resource.pages.view-asset' => 'App\\Filament\\Resources\\AssetResource\\Pages\\ViewAsset',
     'app.filament.resources.company-resource.pages.manage-companies' => 'App\\Filament\\Resources\\CompanyResource\\Pages\\ManageCompanies',
     'app.filament.resources.department-resource.pages.create-department' => 'App\\Filament\\Resources\\DepartmentResource\\Pages\\CreateDepartment',
     'app.filament.resources.department-resource.pages.edit-department' => 'App\\Filament\\Resources\\DepartmentResource\\Pages\\EditDepartment',
@@ -38,7 +42,7 @@
   ),
   'clusterDirectories' => 
   array (
-    0 => 'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament/Clusters',
+    0 => 'C:\\laragon\\www\\helpdeskSupport\\app\\Filament/Clusters',
   ),
   'clusterNamespaces' => 
   array (
@@ -50,7 +54,7 @@
   ),
   'pageDirectories' => 
   array (
-    0 => 'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament/Pages',
+    0 => 'C:\\laragon\\www\\helpdeskSupport\\app\\Filament/Pages',
   ),
   'pageNamespaces' => 
   array (
@@ -58,16 +62,17 @@
   ),
   'resources' => 
   array (
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Resources\\ActivityLogResource.php' => 'App\\Filament\\Resources\\ActivityLogResource',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Resources\\CompanyResource.php' => 'App\\Filament\\Resources\\CompanyResource',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Resources\\DepartmentResource.php' => 'App\\Filament\\Resources\\DepartmentResource',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Resources\\TicketResource.php' => 'App\\Filament\\Resources\\TicketResource',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Resources\\UserResource.php' => 'App\\Filament\\Resources\\UserResource',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Resources\\ActivityLogResource.php' => 'App\\Filament\\Resources\\ActivityLogResource',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Resources\\AssetResource.php' => 'App\\Filament\\Resources\\AssetResource',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Resources\\CompanyResource.php' => 'App\\Filament\\Resources\\CompanyResource',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Resources\\DepartmentResource.php' => 'App\\Filament\\Resources\\DepartmentResource',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Resources\\TicketResource.php' => 'App\\Filament\\Resources\\TicketResource',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Resources\\UserResource.php' => 'App\\Filament\\Resources\\UserResource',
     0 => 'BezhanSalleh\\FilamentShield\\Resources\\RoleResource',
   ),
   'resourceDirectories' => 
   array (
-    0 => 'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament/Resources',
+    0 => 'C:\\laragon\\www\\helpdeskSupport\\app\\Filament/Resources',
   ),
   'resourceNamespaces' => 
   array (
@@ -75,11 +80,11 @@
   ),
   'widgets' => 
   array (
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Widgets\\StatsOverview.php' => 'App\\Filament\\Widgets\\StatsOverview',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Widgets\\TicketChart.php' => 'App\\Filament\\Widgets\\TicketChart',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Widgets\\TicketChartSolved.php' => 'App\\Filament\\Widgets\\TicketChartSolved',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Widgets\\TicketTable.php' => 'App\\Filament\\Widgets\\TicketTable',
-    'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament\\Widgets\\TicketTableSolved.php' => 'App\\Filament\\Widgets\\TicketTableSolved',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Widgets\\StatsOverview.php' => 'App\\Filament\\Widgets\\StatsOverview',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Widgets\\TicketChart.php' => 'App\\Filament\\Widgets\\TicketChart',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Widgets\\TicketChartSolved.php' => 'App\\Filament\\Widgets\\TicketChartSolved',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Widgets\\TicketTable.php' => 'App\\Filament\\Widgets\\TicketTable',
+    'C:\\laragon\\www\\helpdeskSupport\\app\\Filament\\Widgets\\TicketTableSolved.php' => 'App\\Filament\\Widgets\\TicketTableSolved',
     0 => 'App\\Filament\\Widgets\\StatsOverview',
     1 => 'App\\Filament\\Widgets\\TicketChart',
     2 => 'App\\Filament\\Widgets\\TicketChartSolved',
@@ -87,7 +92,7 @@
   ),
   'widgetDirectories' => 
   array (
-    0 => 'C:\\Users\\siti.fatikhah\\project.rev\\helpdeskSupport\\app\\Filament/Widgets',
+    0 => 'C:\\laragon\\www\\helpdeskSupport\\app\\Filament/Widgets',
   ),
   'widgetNamespaces' => 
   array (
