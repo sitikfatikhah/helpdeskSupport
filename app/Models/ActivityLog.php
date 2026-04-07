@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ActivityLog extends Model
 {
-     // Jika kamu menggunakan nama tabel non-standar (bukan jamak dari nama model)
+    // Jika kamu menggunakan nama tabel non-standar (bukan jamak dari nama model)
     protected $table = 'activity_logs';
 
     // Mass assignable fields

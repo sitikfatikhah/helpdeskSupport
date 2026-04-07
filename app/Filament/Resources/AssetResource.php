@@ -11,6 +11,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Actions\ExportAction;
@@ -155,6 +157,15 @@ class AssetResource extends Resource implements HasShieldPermissions
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function (Builder $query) {
+                // Mendapatkan user yang sedang login
+                $user = Auth::user();
+
+                // Jika user BUKAN super_admin, filter tiket sesuai user_id yang login
+                if (!$user->hasRole('super_admin')) {
+                    $query->where('user_id', $user->id);
+                }
+            })
             ->columns([
                 TextColumn::make('device_id')->label('Device ID')->sortable()->searchable(),
                 IconColumn::make('type')

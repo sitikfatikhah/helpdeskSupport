@@ -34,7 +34,6 @@ class TicketResource extends Resource implements HasShieldPermissions
 
     protected static ?int $navigationSort = 2;
 
-
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
         public static function getPermissionPrefixes(): array

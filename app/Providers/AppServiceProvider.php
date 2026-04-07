@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Asset;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Observers\AssetObserver;
 use App\Observers\CompanyObserver;
 use App\Observers\DepartmentObserver;
 use App\Observers\TicketObserver;
@@ -33,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Ticket::observe(TicketObserver::class);
         Company::observe(CompanyObserver::class);
         Department::observe(DepartmentObserver::class);
-
+        Asset::observe(AssetObserver::class);
     }
 
 }

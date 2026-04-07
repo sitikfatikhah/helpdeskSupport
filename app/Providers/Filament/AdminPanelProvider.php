@@ -52,6 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->navigationGroups([
                 'Dashboard',
+                'Assets',
                 'Tickets',
                 'Master User',
                 'Setting', // dipindah ke bawah

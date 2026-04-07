@@ -40,48 +40,50 @@ class ActivityLogResource extends Resource implements HasShieldPermissions
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            TextInput::make('model_type')
-                ->label('Model')
-                ->disabled(),
+            ->schema([
+                TextInput::make('model_type')
+                    ->label('Model')
+                    ->disabled(),
 
-            TextInput::make('model_id')
-                ->label('Model ID')
-                ->disabled(),
+                TextInput::make('model_id')
+                    ->label('Model ID')
+                    ->disabled(),
 
-            TextInput::make('action')
-                ->label('Action')
-                ->disabled(),
+                TextInput::make('action')
+                    ->label('Action')
+                    ->disabled(),
 
-            TextInput::make('causer.name')
-                ->label('User')
-                ->default('System')
-                ->disabled(),
+                TextInput::make('causer.name')
+                    ->label('User')
+                    ->default('System')
+                    ->disabled(),
 
-            Textarea::make('changes')
-                ->label('Changes')
-                ->formatStateUsing(function ($state) {
-                    $decoded = json_decode($state, true);
-                    if (!$decoded || !is_array($decoded)) {
-                        return '-';
-                    }
+                Textarea::make('changes')
+                    ->label('Changes')
+                    // ->formatStateUsing(fn($state) => json_encode($state))
+                    // ->formatStateUsing(function ($state) {
+                    //     $decoded = json_decode($state, true);
+                    //     if (!$decoded || !is_array($decoded)) {
+                    //         return '-';
+                    //     }
 
-                    return collect($decoded)
-                        ->map(fn($value, $key) => "{$key} → {$value}")
-                        ->implode(', ');
-                })
-                ->disabled(),
+                    //     return collect($decoded)
+                    //         ->map(fn($value, $key) => "{$key} → {$value}")
+                    //         ->implode(', ');
+                    // })
+                    ->disabled(),
 
-            TextInput::make('created_at')
-                ->label('Logged At')
-                ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->format('d M Y H:i'))
-                ->disabled(),
-        ]);
+                TextInput::make('created_at')
+                    ->label('Logged At')
+                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d M Y H:i'))
+                    ->disabled(),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('model_type')
                     ->label('Model')
@@ -93,7 +95,7 @@ class ActivityLogResource extends Resource implements HasShieldPermissions
 
                 Tables\Columns\TextColumn::make('action')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'created' => 'success',
                         'updated' => 'warning',
                         'deleted' => 'danger',
@@ -107,21 +109,23 @@ class ActivityLogResource extends Resource implements HasShieldPermissions
 
                 Tables\Columns\TextColumn::make('changes')
                     ->label('Changes')
-                    ->formatStateUsing(fn ($state) => json_encode($state))
-                    ->formatStateUsing(function ($state) {
-                    $decoded = json_decode($state, true);
-                    if (!$decoded || !is_array($decoded)) {
-                     return '-';
-                    }
-                    return collect($decoded)
-                        ->map(fn($value, $key) => "{$key} → {$value}")
-                        ->implode(', ');
-                    })
-                    ->limit(50),
+                    ->wrap(),
+                // ->lineClamp(2),
+                // ->formatStateUsing(fn($state) => json_encode($state)),
+                // ->formatStateUsing(function ($state) {
+                //     $decoded = json_decode($state, true);
+                //     if (!$decoded || !is_array($decoded)) {
+                //         return '-';
+                //     }
+                //     return collect($decoded)
+                //         ->map(fn($value, $key) => "{$key} → {$value}")
+                //         ->implode(', ');
+                // })
+                // ->limit(50),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Date')
-                    ->sortable()
+                    // ->sortable()
                     ->dateTime('d M Y H:i'),
             ])
 
@@ -153,5 +157,4 @@ class ActivityLogResource extends Resource implements HasShieldPermissions
             'edit' => Pages\ViewActivityLog::route('/{record}/edit'),
         ];
     }
-
 }
